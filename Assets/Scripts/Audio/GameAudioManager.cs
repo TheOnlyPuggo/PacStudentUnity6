@@ -25,10 +25,7 @@ public class GameAudioManager : MonoBehaviour
 
     private void Update()
     {
-        if (_gameIntroPlaying)
-        {
-            _introPlayTimer += Time.deltaTime;
-        }
+        if (_gameIntroPlaying) _introPlayTimer += Time.deltaTime;
 
         if ((!_audioSource.isPlaying || _introPlayTimer >= 3.0f) && _gameIntroPlaying)
         {
