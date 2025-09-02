@@ -6,6 +6,7 @@ public class GameAudioManager : MonoBehaviour
 {
     [SerializeField] private AudioClip gameIntro;
     [SerializeField] private AudioClip ghostNormalState;
+    [SerializeField] private float introPlaySeconds;
 
     private AudioSource _audioSource;
     private bool _gameIntroPlaying = false;
@@ -27,7 +28,7 @@ public class GameAudioManager : MonoBehaviour
     {
         if (_gameIntroPlaying) _introPlayTimer += Time.deltaTime;
 
-        if ((!_audioSource.isPlaying || _introPlayTimer >= 3.0f) && _gameIntroPlaying)
+        if ((!_audioSource.isPlaying || _introPlayTimer >= introPlaySeconds) && _gameIntroPlaying)
         {
             _gameIntroPlaying = false;
             _audioSource.clip = ghostNormalState;

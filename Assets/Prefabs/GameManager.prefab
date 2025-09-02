@@ -144,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameIntro: {fileID: 8300000, guid: da390b69d84d5474e8b480f6088d8686, type: 3}
   ghostNormalState: {fileID: 8300000, guid: 3265661d01fbed24dbd5e657349edf67, type: 3}
+  introPlaySeconds: 3
 --- !u!1 &7637804263770090461
 GameObject:
   m_ObjectHideFlags: 0
