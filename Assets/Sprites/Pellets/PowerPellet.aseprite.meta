@@ -125,8 +125,8 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: PowerPellet
     originalName: 
-    pivot: {x: 0.48, y: -0.25}
-    alignment: 9
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
     rect:
@@ -144,6 +144,27 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 36
+      width: 25
+      height: 24
+    spriteID: 2332085700507964294b61232ea23c04
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 4, y: 36}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -158,7 +179,7 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: PowerPellet
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
@@ -167,6 +188,15 @@ ScriptedImporter:
         width: 25
         height: 24
       spriteId: 300ee0b381b3a1140b0962167b98be6e
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 4
+        y: 6
+        width: 25
+        height: 24
+      spriteId: 2332085700507964294b61232ea23c04
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -210,4 +240,4 @@ ScriptedImporter:
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 32, y: 32}
-  previousTextureSize: {x: 64, y: 32}
+  previousTextureSize: {x: 64, y: 64}

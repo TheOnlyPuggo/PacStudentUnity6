@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1617093664471573930
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7961496505971572055, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -7961496505971572055, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_Size.y
+      value: 0.78125
+      objectReference: {fileID: 0}
+    - target: {fileID: -7961496505971572055, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -273039838293054743, guid: 6d81bfdb9ea30e64bb9eb332e252f3c0, type: 3}
+    - target: {fileID: -7961496505971572055, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4259737497982276611, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 610edd58182bc6444a91c744f7f8e1dc, type: 2}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5603502229349472862, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7317396675271554545, guid: 2e71368663a0dc34a93581cab133b493, type: 3}
+      propertyPath: m_Name
+      value: BlueGhost
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2e71368663a0dc34a93581cab133b493, type: 3}

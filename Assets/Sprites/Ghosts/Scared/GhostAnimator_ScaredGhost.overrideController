@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GhostAnimator_ScaredGhost
+  m_Controller: {fileID: 9100000, guid: 541a8bd3fe5631d4cbcd0825d1726428, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 4384443712388667907, guid: 4fb1fc470367b1744a5d5f435064b260, type: 3}
+    m_OverrideClip: {fileID: 6725581367713106198, guid: f92cdb03ae15245468373b9c5f582c9f, type: 3}
+  - m_OriginalClip: {fileID: 6557345907629122949, guid: 8ec65e40949c214419139638fe825caf, type: 3}
+    m_OverrideClip: {fileID: -2534071867789127782, guid: db58d3d8176df25498220c6f3bcaaf5e, type: 3}
+  - m_OriginalClip: {fileID: -4150530475278857196, guid: 3cf494b7da8cd9a4193f400ffd5c09ac, type: 3}
+    m_OverrideClip: {fileID: 7189254226165784081, guid: 40fb1a24a59b97844a9f284f28c564ad, type: 3}
+  - m_OriginalClip: {fileID: -7097099252105309162, guid: bc4b5d23717b7d44cb9e92d4c07c56c8, type: 3}
+    m_OverrideClip: {fileID: -7416166612425098288, guid: 3e193fc956b963843849afbd902af014, type: 3}

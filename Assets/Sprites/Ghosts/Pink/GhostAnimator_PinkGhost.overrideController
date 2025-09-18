@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GhostAnimator_PinkGhost
+  m_Controller: {fileID: 9100000, guid: 541a8bd3fe5631d4cbcd0825d1726428, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 4384443712388667907, guid: 4fb1fc470367b1744a5d5f435064b260, type: 3}
+    m_OverrideClip: {fileID: 8980625041154119518, guid: 60059b9317a008e47a1ea726d7e8d0af, type: 3}
+  - m_OriginalClip: {fileID: 6557345907629122949, guid: 8ec65e40949c214419139638fe825caf, type: 3}
+    m_OverrideClip: {fileID: 7901285430342951150, guid: 52274f3ae49025f4c8d464f985dd3b08, type: 3}
+  - m_OriginalClip: {fileID: -4150530475278857196, guid: 3cf494b7da8cd9a4193f400ffd5c09ac, type: 3}
+    m_OverrideClip: {fileID: 5539975439222657279, guid: f42bc9dc3086bfa4a94091cdb3b41290, type: 3}
+  - m_OriginalClip: {fileID: -7097099252105309162, guid: bc4b5d23717b7d44cb9e92d4c07c56c8, type: 3}
+    m_OverrideClip: {fileID: -8172409792095773850, guid: a7b759aa21dfa5c4b8c0d3de31603d59, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 4e8cb919b47762e44a8e42d3957158a7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 7273f8d68b280bc42bbcebacca0fcdeb, type: 2}
