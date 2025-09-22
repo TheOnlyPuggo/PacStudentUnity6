@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 260006462497803337}
+  - component: {fileID: 9232199323497260}
   - component: {fileID: 932842496597825513}
   m_Layer: 0
   m_Name: LevelMapHandler
@@ -32,6 +33,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9232199323497260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577916897571957821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 352829e836c910448bfadf16bcdaae95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useLevelGenerator: 0
+  levelMap: {fileID: 0}
+  levelTiles:
+  - {fileID: 11400000, guid: 1c389388a2c85ac4f902f1081bd24b4e, type: 2}
+  - {fileID: 11400000, guid: 1ebd3a54f4c9d1c4db5f9c47828e0b51, type: 2}
+  - {fileID: 11400000, guid: a00ee6540f9132d499b621c25500bc03, type: 2}
+  - {fileID: 11400000, guid: e3b652f863e56cf40995e773e0955162, type: 2}
+  - {fileID: 11400000, guid: baf948171b083774099901fb4d1c60be, type: 2}
+  - {fileID: 11400000, guid: 1c7d30ec832652a46be323467814aa58, type: 2}
+  - {fileID: 11400000, guid: f576d5e817f25894b9fcdcf7ea95bd35, type: 2}
+  - {fileID: 11400000, guid: e8802da87aaf69c47a1b1be6a8e9f247, type: 2}
+  - {fileID: 11400000, guid: aa229913a6a22414b9c2e50455746354, type: 2}
+  wallTiles:
+  - {fileID: 11400000, guid: 1ebd3a54f4c9d1c4db5f9c47828e0b51, type: 2}
+  - {fileID: 11400000, guid: 26d1f316a00770143a72321f2884e5ee, type: 2}
+  - {fileID: 11400000, guid: a00ee6540f9132d499b621c25500bc03, type: 2}
+  - {fileID: 11400000, guid: e3b652f863e56cf40995e773e0955162, type: 2}
+  - {fileID: 11400000, guid: baf948171b083774099901fb4d1c60be, type: 2}
+  - {fileID: 11400000, guid: e8802da87aaf69c47a1b1be6a8e9f247, type: 2}
+  - {fileID: 11400000, guid: aa229913a6a22414b9c2e50455746354, type: 2}
+  trackTiles:
+  - {fileID: 11400000, guid: 1c389388a2c85ac4f902f1081bd24b4e, type: 2}
+  - {fileID: 11400000, guid: 1c7d30ec832652a46be323467814aa58, type: 2}
+  - {fileID: 11400000, guid: f576d5e817f25894b9fcdcf7ea95bd35, type: 2}
+  cornerTiles:
+  - {fileID: 11400000, guid: 1ebd3a54f4c9d1c4db5f9c47828e0b51, type: 2}
+  - {fileID: 11400000, guid: 26d1f316a00770143a72321f2884e5ee, type: 2}
 --- !u!114 &932842496597825513
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ public class PowerPelletSpawn : MonoBehaviour
             if (tile == powerPelletTile)
             {
                 GameObject newPowerPellet = Instantiate(powerPellet);
-                newPowerPellet.transform.position = (Vector2)levelMap.GetCellCenterWorld(pos);
+                newPowerPellet.transform.position = new Vector3(levelMap.GetCellCenterWorld(pos).x, levelMap.GetCellCenterWorld(pos).y, newPowerPellet.transform.position.z);
             }
         }
     }

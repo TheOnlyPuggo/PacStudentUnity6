@@ -30,7 +30,11 @@ public class PacStudentMovement : MonoBehaviour
 
     void Start()
     {
-        _worldCellSize = Vector2.Scale(levelMap.cellSize, levelMap.transform.localScale);
+        _worldCellSize = Vector2.Scale(levelMap.cellSize, new Vector3(
+            Mathf.Abs(levelMap.transform.localScale.x),
+            Mathf.Abs(levelMap.transform.localScale.y),
+            Mathf.Abs(levelMap.transform.localScale.z)
+        ));
         _currentMovementDirectionIndex = 0;
         _currentTargetDestination =
             transform.position + new Vector3(_worldCellSize.x * gridMovementDirections[0].x, _worldCellSize.y * gridMovementDirections[0].y, 0.0f);
@@ -50,9 +54,9 @@ public class PacStudentMovement : MonoBehaviour
             }
             _moveTimer += Time.deltaTime;
 
-            transform.position = Vector2.Lerp(
-                _initialPosition,
-                _currentTargetDestination,
+            transform.position = Vector3.Lerp(
+                new Vector3(_initialPosition.x, _initialPosition.y, transform.position.z),
+                new Vector3(_currentTargetDestination.x, _currentTargetDestination.y, transform.position.z),
                 _moveTimer * movementSpeed / Mathf.Abs(gridMovementDirections[_currentMovementDirectionIndex].x + gridMovementDirections[_currentMovementDirectionIndex].y)
             );
         }
@@ -60,7 +64,7 @@ public class PacStudentMovement : MonoBehaviour
         if (Vector2.Distance((Vector2)transform.position, _currentTargetDestination) <= 0.01f && _inMovementLerp)
         {
             _inMovementLerp = false;
-            transform.position = _currentTargetDestination;
+            transform.position = new Vector3(_currentTargetDestination.x, _currentTargetDestination.y, transform.position.z);
             CycleTargetDestination();
         }
 
