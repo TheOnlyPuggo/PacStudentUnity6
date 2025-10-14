@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: -9122514755327250712}
   - component: {fileID: 2858792516374854611}
   - component: {fileID: 7139453054508664733}
-  - component: {fileID: 4198429682058825452}
   m_Layer: 0
   m_Name: PacStudent
   m_TagString: Untagged
@@ -209,20 +208,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4198429682058825452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1539946474704756309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5094217b28858f647b21cc246145ba96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelMap: {fileID: 0}
-  pelletTile: {fileID: 11400000, guid: 1c7d30ec832652a46be323467814aa58, type: 2}
-  movementSpeed: 4
-  gridMovementDirections: []
-  movementClip: {fileID: 8300000, guid: 928fd5c091601a84a8eec43a12cceee6, type: 3}
