@@ -9,6 +9,7 @@ public class PacStudentController : MonoBehaviour
     [SerializeField] private Tilemap levelMap;
     [SerializeField] private float movementDuration;
     [SerializeField] private TileBase[] wallTiles;
+    [SerializeField] private ParticleSystem dirtParticleSystem;
 
     [Header("Audio")]
     [SerializeField] private AudioClip moveClip;
@@ -105,29 +106,44 @@ public class PacStudentController : MonoBehaviour
                 _currentDirection.y
             );
 
+            if (!dirtParticleSystem.isPlaying) dirtParticleSystem.Play(); 
+            var particleVel = dirtParticleSystem.velocityOverLifetime;
+
             if (_currentDirection == new Vector2Int(-1, 0) && (_currentDirectionAnimation != "Left" || _animator.speed == 0.0f))
             {
                 _currentDirectionAnimation = "Left";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                particleVel.x = new ParticleSystem.MinMaxCurve(1.0f);
+                particleVel.y = new ParticleSystem.MinMaxCurve(0.0f);
             }
             else if (_currentDirection == new Vector2Int(1, 0) && (_currentDirectionAnimation != "Right" || _animator.speed == 0.0f))
             {
                 _currentDirectionAnimation = "Right";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                particleVel.x = new ParticleSystem.MinMaxCurve(-1.0f);
+                particleVel.y = new ParticleSystem.MinMaxCurve(0.0f);
             }
             else if (_currentDirection == new Vector2Int(0, 1) && (_currentDirectionAnimation != "Up" || _animator.speed == 0.0f))
             {
                 _currentDirectionAnimation = "Up";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                particleVel.x = new ParticleSystem.MinMaxCurve(0.0f);
+                particleVel.y = new ParticleSystem.MinMaxCurve(-1.0f);
             }
             else if (_currentDirection == new Vector2Int(0, -1) && (_currentDirectionAnimation != "Down" || _animator.speed == 0.0f))
             {
                 _currentDirectionAnimation = "Down";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                particleVel.x = new ParticleSystem.MinMaxCurve(0.0f);
+                particleVel.y = new ParticleSystem.MinMaxCurve(1.0f);
             }
         }
         else if (_currentDirection != desiredDirection && !CheckIsWallTile(_targetCellDestination + _currentDirection)) // Wall tile in desired direction, no wall tile in current direction
@@ -139,6 +155,7 @@ public class PacStudentController : MonoBehaviour
         }
         else
         {
+            if (dirtParticleSystem.isPlaying) dirtParticleSystem.Stop();
             _animator.speed = 0.0f;
         }
 

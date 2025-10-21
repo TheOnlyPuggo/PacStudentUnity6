@@ -394,8 +394,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 610026487
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -9376,7 +9376,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000f7435c24
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -9881,8 +9881,8 @@ TilemapRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 610026487
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -26345,13 +26345,13 @@ PrefabInstance:
       propertyPath: levelMap
       value: 
       objectReference: {fileID: 424467976}
-    - target: {fileID: 718524551084779465, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
-      propertyPath: movementDuration
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 1539946474704756309, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
       propertyPath: m_Name
       value: PacStudent
+      objectReference: {fileID: 0}
+    - target: {fileID: 7077418328831352647, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7506300003757420009, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
       propertyPath: m_LocalPosition.x
