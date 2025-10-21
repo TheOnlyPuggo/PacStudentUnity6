@@ -14,6 +14,7 @@ public class PacStudentController : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioClip moveClip;
     [SerializeField] private AudioClip eatClip;
+    [SerializeField] private AudioClip wallHitClip;
     [SerializeField] private TileBase pelletTile;
     [SerializeField] private TileBase powerPelletTile;
 
@@ -157,6 +158,12 @@ public class PacStudentController : MonoBehaviour
         {
             if (dirtParticleSystem.isPlaying) dirtParticleSystem.Stop();
             _animator.speed = 0.0f;
+
+            if (_audioSource.clip != wallHitClip)
+            {
+                _audioSource.clip = wallHitClip;
+                _audioSource.Play();
+            }
         }
 
         if (_animator.speed != 0.0f)
