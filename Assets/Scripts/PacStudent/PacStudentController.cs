@@ -10,13 +10,18 @@ public class PacStudentController : MonoBehaviour
     [SerializeField] private float movementDuration;
     [SerializeField] private TileBase[] wallTiles;
     [SerializeField] private ParticleSystem dirtParticleSystem;
+    [SerializeField] private ParticleSystem angerParticleSystem;
 
     [Header("Audio")]
     [SerializeField] private AudioClip moveClip;
     [SerializeField] private AudioClip eatClip;
     [SerializeField] private AudioClip wallHitClip;
+
+    [Header("Tiles")]
     [SerializeField] private TileBase pelletTile;
     [SerializeField] private TileBase powerPelletTile;
+    [SerializeField] private TileBase dirtEmptyTile;
+    [SerializeField] private PowerPelletSpawn powerPelletSpawn;
 
     private enum InputKeys
     {
@@ -107,7 +112,7 @@ public class PacStudentController : MonoBehaviour
                 _currentDirection.y
             );
 
-            if (!dirtParticleSystem.isPlaying) dirtParticleSystem.Play(); 
+            if (!dirtParticleSystem.isPlaying && _animator.speed != 0.0f) dirtParticleSystem.Play();
             var particleVel = dirtParticleSystem.velocityOverLifetime;
 
             if (_currentDirection == new Vector2Int(-1, 0) && (_currentDirectionAnimation != "Left" || _animator.speed == 0.0f))
@@ -163,16 +168,20 @@ public class PacStudentController : MonoBehaviour
             {
                 _audioSource.clip = wallHitClip;
                 _audioSource.Play();
+                angerParticleSystem.Play();
             }
         }
 
+        Vector2Int currentCellPos = GetCellPosFromWorld(transform.position);
+        TileBase destTile = levelMap.GetTile(new Vector3Int(currentCellPos.x, currentCellPos.y, 0));
         if (_animator.speed != 0.0f)
         {
-            TileBase destTile = levelMap.GetTile(new Vector3Int(_targetCellDestination.x, _targetCellDestination.y, 0));
             _audioSource.clip = (destTile == pelletTile || destTile == powerPelletTile) ? eatClip : moveClip;
-
             _audioSource.Play();
         }
+
+        if (destTile == pelletTile || destTile == powerPelletTile) levelMap.SetTile(new Vector3Int(currentCellPos.x, currentCellPos.y, 0), dirtEmptyTile);
+        if (destTile == powerPelletTile) powerPelletSpawn.DeletePowerPelletAtPos(currentCellPos);
     }
 
     private Vector2 GetWorldPosFromCell(Vector2Int cellPos)

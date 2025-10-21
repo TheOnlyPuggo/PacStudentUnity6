@@ -26345,6 +26345,10 @@ PrefabInstance:
       propertyPath: levelMap
       value: 
       objectReference: {fileID: 424467976}
+    - target: {fileID: 718524551084779465, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
+      propertyPath: powerPelletSpawn
+      value: 
+      objectReference: {fileID: 1678333783}
     - target: {fileID: 1539946474704756309, guid: c636d63ddce0963438cf62fa8b3ccff7, type: 3}
       propertyPath: m_Name
       value: PacStudent
@@ -26577,6 +26581,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6c7821decb9ca4943a1bf0842c0b7583, type: 3}
+--- !u!114 &1678333783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 932842496597825513, guid: 0ccc49a941594a14e984a27510521a1a, type: 3}
+  m_PrefabInstance: {fileID: 2626918272264955580}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dd31e93b0571d548963df35e6f6c4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1924869757
 PrefabInstance:
   m_ObjectHideFlags: 0
