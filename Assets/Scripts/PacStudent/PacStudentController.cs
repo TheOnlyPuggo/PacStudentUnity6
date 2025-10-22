@@ -3,8 +3,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class PacStudentController : MonoBehaviour
+public class PacStudentController : MonoBehaviour, ITeleportable
 {
+    public GameObject ShadowReference { get; private set; }
+    private Animator _shadowReferenceAnimator;
+    public bool IsInTeleport { get; set; } = false;
+
     [Header("Movement")]
     [SerializeField] private Tilemap levelMap;
     [SerializeField] private float movementDuration;
@@ -43,6 +47,7 @@ public class PacStudentController : MonoBehaviour
     private Vector2Int _targetCellDestination;
     private bool _inLerp = false;
     private string _currentDirectionAnimation = "None";
+    private Coroutine _activeMoveCoroutine;
 
     private void Awake()
     {
@@ -70,6 +75,18 @@ public class PacStudentController : MonoBehaviour
         _currentDirectionAnimation = "Right";
         _animator.SetTrigger(_currentDirectionAnimation);
         _animator.speed = 0.0f;
+
+        ShadowReference = Instantiate(gameObject);
+        PacStudentController shadowReferenceController = ShadowReference.GetComponent<PacStudentController>();
+        Destroy(shadowReferenceController);
+        _shadowReferenceAnimator = ShadowReference.GetComponent<Animator>();
+        ShadowReference.SetActive(false);
+
+        if (ShadowReference.activeSelf)
+        {
+            _shadowReferenceAnimator.SetTrigger(_currentDirectionAnimation);
+            _shadowReferenceAnimator.speed = 0.0f;
+        }
     }
 
     private void Update()
@@ -84,13 +101,13 @@ public class PacStudentController : MonoBehaviour
         if (!_inLerp)
         {
             _inLerp = true;
-            StartCoroutine(MoveToPos(transform.position, GetWorldPosFromCell(_targetCellDestination), movementDuration));
+            _activeMoveCoroutine = StartCoroutine(MoveToPos(transform.position, GetWorldPosFromCell(_targetCellDestination), movementDuration, 0.0f));
         }
     }
 
-    private IEnumerator MoveToPos(Vector2 startPos, Vector2 endPos, float duration)
+    private IEnumerator MoveToPos(Vector2 startPos, Vector2 endPos, float duration, float setTime)
     {
-        float time = 0.0f;
+        float time = setTime;
         while (time < duration)
         {
             transform.position = Vector2.Lerp(startPos, endPos, time / duration);
@@ -121,6 +138,12 @@ public class PacStudentController : MonoBehaviour
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
 
+                if (ShadowReference.activeSelf)
+                {
+                    _shadowReferenceAnimator.SetTrigger(_currentDirectionAnimation);
+                    _animator.speed = 1.0f;
+                }
+
                 particleVel.x = new ParticleSystem.MinMaxCurve(1.0f);
                 particleVel.y = new ParticleSystem.MinMaxCurve(0.0f);
             }
@@ -129,6 +152,12 @@ public class PacStudentController : MonoBehaviour
                 _currentDirectionAnimation = "Right";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                if (ShadowReference.activeSelf)
+                {
+                    _shadowReferenceAnimator.SetTrigger(_currentDirectionAnimation);
+                    _animator.speed = 1.0f;
+                }
 
                 particleVel.x = new ParticleSystem.MinMaxCurve(-1.0f);
                 particleVel.y = new ParticleSystem.MinMaxCurve(0.0f);
@@ -139,6 +168,12 @@ public class PacStudentController : MonoBehaviour
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
 
+                if (ShadowReference.activeSelf)
+                {
+                    _shadowReferenceAnimator.SetTrigger(_currentDirectionAnimation);
+                    _animator.speed = 1.0f;
+                }
+
                 particleVel.x = new ParticleSystem.MinMaxCurve(0.0f);
                 particleVel.y = new ParticleSystem.MinMaxCurve(-1.0f);
             }
@@ -147,6 +182,12 @@ public class PacStudentController : MonoBehaviour
                 _currentDirectionAnimation = "Down";
                 _animator.SetTrigger(_currentDirectionAnimation);
                 _animator.speed = 1.0f;
+
+                if (ShadowReference.activeSelf)
+                {
+                    _shadowReferenceAnimator.SetTrigger(_currentDirectionAnimation);
+                    _animator.speed = 1.0f;
+                }
 
                 particleVel.x = new ParticleSystem.MinMaxCurve(0.0f);
                 particleVel.y = new ParticleSystem.MinMaxCurve(1.0f);
@@ -163,6 +204,8 @@ public class PacStudentController : MonoBehaviour
         {
             if (dirtParticleSystem.isPlaying) dirtParticleSystem.Stop();
             _animator.speed = 0.0f;
+
+            if (ShadowReference.activeSelf) _animator.speed = 1.0f;
 
             if (_audioSource.clip != wallHitClip)
             {
@@ -182,9 +225,11 @@ public class PacStudentController : MonoBehaviour
 
         if (destTile == pelletTile || destTile == powerPelletTile) levelMap.SetTile(new Vector3Int(currentCellPos.x, currentCellPos.y, 0), dirtEmptyTile);
         if (destTile == powerPelletTile) powerPelletSpawn.DeletePowerPelletAtPos(currentCellPos);
+
+        if (IsInTeleport == true) IsInTeleport = false;
     }
 
-    private Vector2 GetWorldPosFromCell(Vector2Int cellPos)
+    public Vector2 GetWorldPosFromCell(Vector2Int cellPos)
     {
         return new Vector2(
             cellPos.x * _worldCellSize.x + (_worldCellSize.x / 2.0f),
@@ -192,7 +237,7 @@ public class PacStudentController : MonoBehaviour
         );
     }
 
-    private Vector2Int GetCellPosFromWorld(Vector2 worldPos)
+    public Vector2Int GetCellPosFromWorld(Vector2 worldPos)
     {
         return new Vector2Int(
             (int)Mathf.Floor(worldPos.x / _worldCellSize.x),
@@ -200,9 +245,19 @@ public class PacStudentController : MonoBehaviour
         );
     }
 
-    private Vector2 GetWorldPosNormalized(Vector2 worldPos)
+    public Vector2 GetWorldPosNormalized(Vector2 worldPos)
     {
         return GetWorldPosFromCell(GetCellPosFromWorld(worldPos));
+    }
+
+    public void TeleportMoveStudent(Vector2 startPos, Vector2 endPos)
+    {
+        StopCoroutine(_activeMoveCoroutine);
+
+        _targetCellDestination = GetCellPosFromWorld(endPos);
+        _inLerp = true;
+
+        _activeMoveCoroutine = StartCoroutine(MoveToPos(startPos, endPos, movementDuration, movementDuration * 0.50f));
     }
 
     private Vector2Int GetNewDirection(InputAction action)
@@ -239,5 +294,10 @@ public class PacStudentController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public string GetCurrentDirectionAnimation()
+    {
+        return _currentDirectionAnimation;
     }
 }
