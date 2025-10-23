@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
                 _tenMilliseconds < PlayerPrefs.GetInt("Level1BestTenMilli")
             ) achievedBestTime = true; 
 
-            if (achievedBestTime)
+            if (achievedBestTime && !_playerDead)
             {
                 PlayerPrefs.SetInt("Level1BestMinute", _minutes);
                 PlayerPrefs.SetInt("Level1BestSecond", _seconds);
