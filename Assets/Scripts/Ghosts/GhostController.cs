@@ -48,6 +48,7 @@ public class GhostController : MonoBehaviour
                 if (GameManager.Instance.GhostManager.GhostsAreScared)
                 {
                     GameManager.Instance.GhostManager.SetGhostAnimState(this, GhostManager.GhostAnimState.Scared);
+                    GameManager.Instance.GameAudioManager.PlayScaredGhostMusic(-1.0f);
                 } else
                 {
                     GameManager.Instance.GhostManager.SetGhostAnimState(this, GhostManager.GhostAnimState.Normal);

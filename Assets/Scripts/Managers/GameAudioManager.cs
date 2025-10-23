@@ -56,7 +56,7 @@ public class GameAudioManager : MonoBehaviour
     {
         _ghostsScared = true;
         _ghostScaredTimer = 0.0f;
-        _ghostScaredDuration = duration;
+        if (duration != -1.0f) _ghostScaredDuration = duration;
         _audioSource.clip = ghostScaredState;
         _audioSource.loop = true;
         _audioSource.Play();
