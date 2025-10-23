@@ -7,6 +7,7 @@ public class GameAudioManager : MonoBehaviour
     [SerializeField] private AudioClip gameIntro;
     [SerializeField] private AudioClip ghostNormalState;
     [SerializeField] private AudioClip ghostScaredState;
+    [SerializeField] private AudioClip oneGhostDeadState;
     [SerializeField] private float introPlaySeconds;
 
     private AudioSource _audioSource;
@@ -32,7 +33,7 @@ public class GameAudioManager : MonoBehaviour
     {
         if (_gameIntroPlaying) _introPlayTimer += Time.deltaTime;
 
-        if ((!_audioSource.isPlaying || _introPlayTimer >= introPlaySeconds) && _gameIntroPlaying && !_ghostsScared)
+        if ((!_audioSource.isPlaying || _introPlayTimer >= introPlaySeconds) && _gameIntroPlaying && !_ghostsScared && GameManager.Instance.GameStarted)
         {
             _gameIntroPlaying = false;
             PlayNormalGameMusic();
@@ -57,6 +58,13 @@ public class GameAudioManager : MonoBehaviour
         _ghostScaredTimer = 0.0f;
         _ghostScaredDuration = duration;
         _audioSource.clip = ghostScaredState;
+        _audioSource.loop = true;
+        _audioSource.Play();
+    }
+
+    public void PlayOneGhostDeadMusic()
+    {
+        _audioSource.clip = oneGhostDeadState;
         _audioSource.loop = true;
         _audioSource.Play();
     }

@@ -33,6 +33,8 @@ public class CherryController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.GameStarted) return;
+
         CherrySpawnManage();
         CherryMoveManage();
         CherryDestroyHandle();

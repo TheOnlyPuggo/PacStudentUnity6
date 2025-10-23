@@ -325,6 +325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05c3ad36d4dea04cada343f59a419f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelMap: {fileID: 0}
+  deathLength: 3
 --- !u!1 &8367310609917830745
 GameObject:
   m_ObjectHideFlags: 0

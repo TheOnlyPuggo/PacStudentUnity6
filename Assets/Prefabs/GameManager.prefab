@@ -145,6 +145,7 @@ MonoBehaviour:
   gameIntro: {fileID: 8300000, guid: da390b69d84d5474e8b480f6088d8686, type: 3}
   ghostNormalState: {fileID: 8300000, guid: 3265661d01fbed24dbd5e657349edf67, type: 3}
   ghostScaredState: {fileID: 8300000, guid: b92c75a966432bb4280a53c569c8518e, type: 3}
+  oneGhostDeadState: {fileID: 8300000, guid: 15a272bbd35758e479fc429983473eda, type: 3}
   introPlaySeconds: 3
 --- !u!1 &5911583032072574896
 GameObject:
@@ -288,3 +289,11 @@ MonoBehaviour:
   playerLives: 3
   scoreText: {fileID: 0}
   livesText: {fileID: 0}
+  timerText: {fileID: 0}
+  startCountdownAnimator: {fileID: 0}
+  startCountdownAnimClip: {fileID: 7400000, guid: 84db59d46eb13a048959022a2eecbfba, type: 2}
+  gameOverAnimator: {fileID: 0}
+  gameOverAnimClip: {fileID: 7400000, guid: f2eddfed07737cf44a2aa1b4760a9236, type: 2}
+  levelMap: {fileID: 0}
+  normalPellet: {fileID: 11400000, guid: 1c7d30ec832652a46be323467814aa58, type: 2}
+  powerPellet: {fileID: 11400000, guid: f576d5e817f25894b9fcdcf7ea95bd35, type: 2}

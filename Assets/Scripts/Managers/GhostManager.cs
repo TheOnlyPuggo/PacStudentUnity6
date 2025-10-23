@@ -35,7 +35,7 @@ public class GhostManager : MonoBehaviour
 
     private void GhostScaredHandle()
     {
-        if (!GhostsAreScared) return;
+        if (!GhostsAreScared || !GameManager.Instance.GameStarted) return;
 
         if (!ghostTimerObj.activeSelf) ghostTimerObj.SetActive(true);
 
@@ -49,12 +49,18 @@ public class GhostManager : MonoBehaviour
             {
                 if (!_recoveryGhostAnimNormal)
                 {
-                    SetGhostAnimState(GhostAnimState.Normal);
+                    foreach (var controller in ghostControllers)
+                    {
+                        if (!controller.GhostIsDead) SetGhostAnimState(controller, GhostAnimState.Normal);
+                    }
                     _recoveryGhostAnimNormal = true;
                 }
                 else
                 {
-                    SetGhostAnimState(GhostAnimState.Scared);
+                    foreach (var controller in ghostControllers)
+                    {
+                        if (!controller.GhostIsDead) SetGhostAnimState(controller, GhostAnimState.Scared);
+                    }
                     _recoveryGhostAnimNormal = false;
                 }
                 _recoveryIntervalTimer = 0.0f;
@@ -68,7 +74,12 @@ public class GhostManager : MonoBehaviour
             GhostsAreScared = false;
             _scaredTimer = 0.0f;
             _recoveryIntervalTimer = 0.0f;
-            SetGhostAnimState(GhostAnimState.Normal);
+
+            foreach (var controller in ghostControllers)
+            {
+                if (!controller.GhostIsDead) SetGhostAnimState(controller, GhostAnimState.Normal);
+            }
+
             ghostTimerObj.SetActive(false);
         }
     }
@@ -79,55 +90,56 @@ public class GhostManager : MonoBehaviour
         _scaredLength = scaredLength;
         _recoveryLength = recoveryLength;
         GhostsAreScared = true;
-        SetGhostAnimState(GhostAnimState.Scared);
+
+        foreach (var controller in ghostControllers)
+        {
+            SetGhostAnimState(controller, GhostAnimState.Scared);
+        }
 
         GameManager.Instance.GameAudioManager.PlayScaredGhostMusic(scaredLength);
     }
 
-    private void SetGhostAnimState(GhostAnimState state)
+    public void SetGhostAnimState(GhostController controller, GhostAnimState state)
     {
-        foreach (var controller in ghostControllers)
+        if (state == GhostAnimState.Scared)
         {
-            if (state == GhostAnimState.Scared)
+            switch (controller.CurrentAnimation)
             {
-                switch (controller.CurrentAnimation)
-                {
-                    case "NormalForward":
-                        controller.TriggerGhostAnimation("ScaredForward");
-                        break;
-                    case "NormalBackward":
-                        controller.TriggerGhostAnimation("ScaredBackward");
-                        break;
-                    case "NormalLeft":
-                        controller.TriggerGhostAnimation("ScaredLeft");
-                        break;
-                    case "NormalRight":
-                        controller.TriggerGhostAnimation("ScaredRight");
-                        break;
-                    default:
-                        controller.TriggerGhostAnimation("ScaredForward");
-                        break;
-                }
-            } else if (state == GhostAnimState.Normal)
+                case "NormalForward":
+                    controller.TriggerGhostAnimation("ScaredForward");
+                    break;
+                case "NormalBackward":
+                    controller.TriggerGhostAnimation("ScaredBackward");
+                    break;
+                case "NormalLeft":
+                    controller.TriggerGhostAnimation("ScaredLeft");
+                    break;
+                case "NormalRight":
+                    controller.TriggerGhostAnimation("ScaredRight");
+                    break;
+                default:
+                    controller.TriggerGhostAnimation("ScaredForward");
+                    break;
+            }
+        } else if (state == GhostAnimState.Normal)
+        {
+            switch (controller.CurrentAnimation)
             {
-                switch (controller.CurrentAnimation)
-                {
-                    case "ScaredForward":
-                        controller.TriggerGhostAnimation("NormalForward");
-                        break;
-                    case "ScaredBackward":
-                        controller.TriggerGhostAnimation("NormalBackward");
-                        break;
-                    case "ScaredLeft":
-                        controller.TriggerGhostAnimation("NormalLeft");
-                        break;
-                    case "ScaredRight":
-                        controller.TriggerGhostAnimation("NormalRight");
-                        break;
-                    default:
-                        controller.TriggerGhostAnimation("NormalForward");
-                        break;
-                }
+                case "ScaredForward":
+                    controller.TriggerGhostAnimation("NormalForward");
+                    break;
+                case "ScaredBackward":
+                    controller.TriggerGhostAnimation("NormalBackward");
+                    break;
+                case "ScaredLeft":
+                    controller.TriggerGhostAnimation("NormalLeft");
+                    break;
+                case "ScaredRight":
+                    controller.TriggerGhostAnimation("NormalRight");
+                    break;
+                default:
+                    controller.TriggerGhostAnimation("NormalForward");
+                    break;
             }
         }
     }

@@ -4,13 +4,16 @@ using UnityEngine.Tilemaps;
 public class GhostController : MonoBehaviour
 {
     public string CurrentAnimation { get; private set; } = "StillForward";
+    public bool GhostIsDead { get; private set; } = false;
 
     [SerializeField] private Tilemap levelMap;
+    [SerializeField] private float deathLength;
 
     private Animator _animator;
 
     private Vector2 _worldCellSize;
     private Vector2 _initialSpawnPosition;
+    private float _ghostDeadTimer = 0.0f;
 
     private void Awake()
     {
@@ -29,6 +32,30 @@ public class GhostController : MonoBehaviour
         _initialSpawnPosition = transform.position;
     }
 
+    private void Update()
+    {
+        if (!GameManager.Instance.GameStarted) return;
+
+        if (GhostIsDead)
+        {
+            _ghostDeadTimer += Time.deltaTime;
+
+            if (_ghostDeadTimer > deathLength)
+            {
+                GhostIsDead = false;
+                _ghostDeadTimer = 0.0f;
+
+                if (GameManager.Instance.GhostManager.GhostsAreScared)
+                {
+                    GameManager.Instance.GhostManager.SetGhostAnimState(this, GhostManager.GhostAnimState.Scared);
+                } else
+                {
+                    GameManager.Instance.GhostManager.SetGhostAnimState(this, GhostManager.GhostAnimState.Normal);
+                }
+            }
+        }
+    }
+
     public void TriggerGhostAnimation(string triggerName)
     {
         _animator.SetTrigger(triggerName);
@@ -37,6 +64,15 @@ public class GhostController : MonoBehaviour
     public void TriggerGhostReset()
     {
         transform.position = _initialSpawnPosition;
+        _animator.SetTrigger("NormalForward");
+    }
+
+    public void TriggerGhostDeath()
+    {
+        _animator.SetTrigger("Death");
+        GameManager.Instance.GameAudioManager.PlayOneGhostDeadMusic();
+        GameManager.Instance.AddScore(300);
+        GhostIsDead = true;
     }
 
     public Vector2 GetWorldPosFromCell(Vector2Int cellPos)

@@ -16,6 +16,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
     [SerializeField] private TileBase[] wallTiles;
     [SerializeField] private ParticleSystem dirtParticleSystem;
     [SerializeField] private ParticleSystem angerParticleSystem;
+    [SerializeField] private ParticleSystem bloodParticleSystem;
 
     [Header("Audio")]
     [SerializeField] private AudioClip moveClip;
@@ -44,6 +45,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
 
     private Animator _animator;
     private AudioSource _audioSource;
+    private SpriteRenderer _spriteRenderer;
 
     private Vector2 _worldCellSize;
     private GameInput _gameInput;
@@ -64,6 +66,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -111,6 +114,13 @@ public class PacStudentController : MonoBehaviour, ITeleportable
 
     private void Update()
     {
+        if (GameManager.Instance.GetPlayerLives() <= 0)
+        {
+            Destroy(_spriteRenderer);
+        }
+
+        if (!GameManager.Instance.GameStarted) return;
+
         foreach (var key in _movementKeys)
         {
             if (!key.IsPressed() || _lastInput == key) continue;
@@ -263,6 +273,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         if (destTile == pelletTile)
         {
             GameManager.Instance.AddScore(10);
+            GameManager.Instance.CollectedPellet();
         }
 
         if (destTile == powerPelletTile)
@@ -270,6 +281,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
             powerPelletSpawn.DeletePowerPelletAtPos(currentCellPos);
             GameManager.Instance.AddScore(50);
             GameManager.Instance.GhostManager.TriggerScared(10.0f, 3.0f);
+            GameManager.Instance.CollectedPellet();
         }
 
         if (IsInTeleport == true) IsInTeleport = false;
@@ -355,15 +367,20 @@ public class PacStudentController : MonoBehaviour, ITeleportable
             GameManager.Instance.AddScore(100);
         } else if (collision.CompareTag("Enemy") && !_isDead)
         {
+            GhostController colliderGhostController = collision.GetComponent<GhostController>();
+
             if (!GameManager.Instance.GhostManager.GhostsAreScared)
             {
                 GameManager.Instance.AddPlayerLife(-1);
                 _isDead = true;
                 _animator.SetTrigger("Death");
                 dirtParticleSystem.Stop();
+                bloodParticleSystem.Play();
 
-                GhostController colliderGhostController = collision.GetComponent<GhostController>();
                 colliderGhostController.TriggerGhostReset();
+            } else
+            {
+                colliderGhostController.TriggerGhostDeath();
             }
         }
     }
