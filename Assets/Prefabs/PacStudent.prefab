@@ -244,6 +244,8 @@ MonoBehaviour:
   powerPelletTile: {fileID: 11400000, guid: f576d5e817f25894b9fcdcf7ea95bd35, type: 2}
   dirtEmptyTile: {fileID: 11400000, guid: 1c389388a2c85ac4f902f1081bd24b4e, type: 2}
   powerPelletSpawn: {fileID: 0}
+  cherryController: {fileID: 0}
+  deathAnimationLength: 1
 --- !u!50 &2907305238681266425
 Rigidbody2D:
   serializedVersion: 5

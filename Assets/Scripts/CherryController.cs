@@ -110,4 +110,11 @@ public class CherryController : MonoBehaviour
         _cherryIsCloseToCenter = false;
         Destroy(_activeCherry);
     }
+
+    public void PlayerDestroyCherry()
+    {
+        _cherryIsMoving = false;
+        _cherryIsCloseToCenter = false;
+        Destroy(_activeCherry);
+    }
 }

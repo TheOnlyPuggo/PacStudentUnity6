@@ -43,7 +43,7 @@ public class TeleporterController : MonoBehaviour
                     shadowAnimator.speed = 1.0f;
                 }
 
-                if (Vector2.Distance((Vector2)transform.position, (Vector2)collider.transform.position) < 0.025f)
+                if (Vector2.Distance((Vector2)transform.position, (Vector2)collider.transform.position) < 0.03f)
                 {
                     if (collider.transform.position.x > transform.position.x && connectedTeleporter.transform.position.x > transform.position.x) TeleportationHandle(collider);
                     if (collider.transform.position.x < transform.position.x && connectedTeleporter.transform.position.x < transform.position.x) TeleportationHandle(collider);

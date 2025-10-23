@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
@@ -27,6 +28,12 @@ public class PacStudentController : MonoBehaviour, ITeleportable
     [SerializeField] private TileBase dirtEmptyTile;
     [SerializeField] private PowerPelletSpawn powerPelletSpawn;
 
+    [Header("Cherry")]
+    [SerializeField] private CherryController cherryController;
+
+    [Header("Animation")]
+    [SerializeField] private float deathAnimationLength;
+
     private enum InputKeys
     {
         LEFT = 0,
@@ -48,6 +55,10 @@ public class PacStudentController : MonoBehaviour, ITeleportable
     private bool _inLerp = false;
     private string _currentDirectionAnimation = "None";
     private Coroutine _activeMoveCoroutine;
+    private Vector2 _initialSpawnPosition;
+
+    private bool _isDead = false;
+    private float _deadTimer = 0.0f;
 
     private void Awake()
     {
@@ -63,18 +74,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
             Mathf.Abs(levelMap.transform.localScale.z)
         ));
 
-        _gameInput = InputManager.Instance.GameInput;
-        _movementKeys[(int)InputKeys.LEFT] = _gameInput.Player.LeftKey;
-        _movementKeys[(int)InputKeys.RIGHT] = _gameInput.Player.RightKey;
-        _movementKeys[(int)InputKeys.UP] = _gameInput.Player.UpKey;
-        _movementKeys[(int)InputKeys.DOWN] = _gameInput.Player.DownKey;
-
-        transform.position = GetWorldPosNormalized(transform.position);
-        _targetCellDestination = GetCellPosFromWorld(transform.position);
-
-        _currentDirectionAnimation = "Right";
-        _animator.SetTrigger(_currentDirectionAnimation);
-        _animator.speed = 0.0f;
+        PlayerSetup();
 
         ShadowReference = Instantiate(gameObject);
         PacStudentController shadowReferenceController = ShadowReference.GetComponent<PacStudentController>();
@@ -89,6 +89,26 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         }
     }
 
+    private void PlayerSetup()
+    {
+        _gameInput = GameManager.Instance.InputManager.GameInput;
+        _movementKeys[(int)InputKeys.LEFT] = _gameInput.Player.LeftKey;
+        _movementKeys[(int)InputKeys.RIGHT] = _gameInput.Player.RightKey;
+        _movementKeys[(int)InputKeys.UP] = _gameInput.Player.UpKey;
+        _movementKeys[(int)InputKeys.DOWN] = _gameInput.Player.DownKey;
+
+        transform.position = GetWorldPosNormalized(transform.position);
+        _initialSpawnPosition = transform.position;
+        _targetCellDestination = GetCellPosFromWorld(transform.position);
+
+        _currentDirectionAnimation = "Right";
+        _animator.SetTrigger(_currentDirectionAnimation);
+        _animator.speed = 0.0f;
+
+        _inLerp = false;
+        _lastInput = null;
+    }
+
     private void Update()
     {
         foreach (var key in _movementKeys)
@@ -98,10 +118,25 @@ public class PacStudentController : MonoBehaviour, ITeleportable
             _lastInput = key;
         }
 
-        if (!_inLerp)
+        if (!_inLerp && !_isDead)
         {
             _inLerp = true;
             _activeMoveCoroutine = StartCoroutine(MoveToPos(transform.position, GetWorldPosFromCell(_targetCellDestination), movementDuration, 0.0f));
+        }
+
+        if (_isDead && _activeMoveCoroutine != null) StopCoroutine(_activeMoveCoroutine);
+
+        if (_isDead)
+        {
+            _deadTimer += Time.deltaTime;
+
+            if (_deadTimer >= deathAnimationLength)
+            {
+                _deadTimer = 0.0f;
+                transform.position = _initialSpawnPosition;
+                _isDead = false;
+                PlayerSetup();
+            }
         }
     }
 
@@ -224,7 +259,18 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         }
 
         if (destTile == pelletTile || destTile == powerPelletTile) levelMap.SetTile(new Vector3Int(currentCellPos.x, currentCellPos.y, 0), dirtEmptyTile);
-        if (destTile == powerPelletTile) powerPelletSpawn.DeletePowerPelletAtPos(currentCellPos);
+
+        if (destTile == pelletTile)
+        {
+            GameManager.Instance.AddScore(10);
+        }
+
+        if (destTile == powerPelletTile)
+        {
+            powerPelletSpawn.DeletePowerPelletAtPos(currentCellPos);
+            GameManager.Instance.AddScore(50);
+            GameManager.Instance.GhostManager.TriggerScared(10.0f, 3.0f);
+        }
 
         if (IsInTeleport == true) IsInTeleport = false;
     }
@@ -299,5 +345,26 @@ public class PacStudentController : MonoBehaviour, ITeleportable
     public string GetCurrentDirectionAnimation()
     {
         return _currentDirectionAnimation;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Cherry"))
+        {
+            cherryController.PlayerDestroyCherry();
+            GameManager.Instance.AddScore(100);
+        } else if (collision.CompareTag("Enemy") && !_isDead)
+        {
+            if (!GameManager.Instance.GhostManager.GhostsAreScared)
+            {
+                GameManager.Instance.AddPlayerLife(-1);
+                _isDead = true;
+                _animator.SetTrigger("Death");
+                dirtParticleSystem.Stop();
+
+                GhostController colliderGhostController = collision.GetComponent<GhostController>();
+                colliderGhostController.TriggerGhostReset();
+            }
+        }
     }
 }
