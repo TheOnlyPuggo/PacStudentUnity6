@@ -57,7 +57,10 @@ public class GameAudioManager : MonoBehaviour
         _ghostsScared = true;
         _ghostScaredTimer = 0.0f;
         if (duration != -1.0f) _ghostScaredDuration = duration;
-        _audioSource.clip = ghostScaredState;
+
+        if (GameManager.Instance.GhostManager.SeeIfAnyGhostIsDead()) _audioSource.clip = oneGhostDeadState;
+        else _audioSource.clip = ghostScaredState;
+
         _audioSource.loop = true;
         _audioSource.Play();
     }
@@ -74,5 +77,15 @@ public class GameAudioManager : MonoBehaviour
         _audioSource.clip = ghostNormalState;
         _audioSource.loop = true;
         _audioSource.Play();
+    }
+
+    public AudioClip GetOneGhostDeadClip()
+    {
+        return oneGhostDeadState;
+    }
+
+    public AudioClip GetGhostScaredClip()
+    {
+        return ghostScaredState;
     }
 }

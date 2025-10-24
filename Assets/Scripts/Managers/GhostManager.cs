@@ -4,6 +4,7 @@ using UnityEngine;
 public class GhostManager : MonoBehaviour
 {
     public bool GhostsAreScared { get; private set; } = false;
+    public bool PlayerIsDead { get; private set; } = false;
 
     [SerializeField] private float recoveryInterval;
     [SerializeField] private GameObject ghostTimerObj;
@@ -14,6 +15,8 @@ public class GhostManager : MonoBehaviour
     private bool _recoveryGhostAnimNormal = false;
     private float _scaredLength;
     private float _recoveryLength;
+    private float _playerDeadTimer = 0.0f;
+    private float _ghostPauseLength;
 
     public enum GhostAnimState
     {
@@ -31,6 +34,22 @@ public class GhostManager : MonoBehaviour
     private void Update()
     {
         GhostScaredHandle();
+
+        if (PlayerIsDead)
+        {
+            _playerDeadTimer += Time.deltaTime;
+
+            if (_playerDeadTimer > _ghostPauseLength)
+            {
+                PlayerIsDead = false;
+
+                foreach (var controller in ghostControllers)
+                {
+                    controller.TriggerGhostAnimation("NormalForward");
+                    controller.ResetGhostToStart();
+                }
+            }
+        }
     }
 
     private void GhostScaredHandle()
@@ -93,10 +112,22 @@ public class GhostManager : MonoBehaviour
 
         foreach (var controller in ghostControllers)
         {
-            SetGhostAnimState(controller, GhostAnimState.Scared);
+            if (!controller.GhostIsDead) SetGhostAnimState(controller, GhostAnimState.Scared);
         }
 
-        GameManager.Instance.GameAudioManager.PlayScaredGhostMusic(scaredLength);
+        GameAudioManager gameAudioManager = GameManager.Instance.GameAudioManager;
+        gameAudioManager.PlayScaredGhostMusic(scaredLength);
+    }
+
+    public void PlayerDeathEvent(float ghostPauseLength)
+    {
+        PlayerIsDead = true;
+        _ghostPauseLength = ghostPauseLength;
+
+        foreach (var controller in ghostControllers)
+        {
+            controller.TriggerGhostAnimation("NormalForward");
+        }
     }
 
     public void SetGhostAnimState(GhostController controller, GhostAnimState state)
@@ -115,6 +146,18 @@ public class GhostManager : MonoBehaviour
                     controller.TriggerGhostAnimation("ScaredLeft");
                     break;
                 case "NormalRight":
+                    controller.TriggerGhostAnimation("ScaredRight");
+                    break;
+                case "ScaredForward":
+                    controller.TriggerGhostAnimation("ScaredForward");
+                    break;
+                case "ScaredBackward":
+                    controller.TriggerGhostAnimation("ScaredBackward");
+                    break;
+                case "ScaredLeft":
+                    controller.TriggerGhostAnimation("ScaredLeft");
+                    break;
+                case "ScaredRight":
                     controller.TriggerGhostAnimation("ScaredRight");
                     break;
                 default:
@@ -137,10 +180,32 @@ public class GhostManager : MonoBehaviour
                 case "ScaredRight":
                     controller.TriggerGhostAnimation("NormalRight");
                     break;
+                case "NormalForward":
+                    controller.TriggerGhostAnimation("NormalForward");
+                    break;
+                case "NormalBackward":
+                    controller.TriggerGhostAnimation("NormalBackward");
+                    break;
+                case "NormalLeft":
+                    controller.TriggerGhostAnimation("NormalLeft");
+                    break;
+                case "NormalRight":
+                    controller.TriggerGhostAnimation("NormalRight");
+                    break;
                 default:
                     controller.TriggerGhostAnimation("NormalForward");
                     break;
             }
         }
+    }
+
+    public bool SeeIfAnyGhostIsDead()
+    {
+        foreach (var controller in ghostControllers)
+        {
+            if (controller.GhostIsDead) return true;
+        }
+
+        return false;
     }
 }

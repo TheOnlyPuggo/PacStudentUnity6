@@ -12,7 +12,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
 
     [Header("Movement")]
     [SerializeField] private Tilemap levelMap;
-    [SerializeField] private float movementDuration;
+    [SerializeField] private float movementSpeed;
     [SerializeField] private TileBase[] wallTiles;
     [SerializeField] private ParticleSystem dirtParticleSystem;
     [SerializeField] private ParticleSystem angerParticleSystem;
@@ -131,7 +131,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         if (!_inLerp && !_isDead)
         {
             _inLerp = true;
-            _activeMoveCoroutine = StartCoroutine(MoveToPos(transform.position, GetWorldPosFromCell(_targetCellDestination), movementDuration, 0.0f));
+            _activeMoveCoroutine = StartCoroutine(MoveToPos(transform.position, GetWorldPosFromCell(_targetCellDestination), 1.0f / movementSpeed, 0.0f));
         }
 
         if (_isDead && _activeMoveCoroutine != null) StopCoroutine(_activeMoveCoroutine);
@@ -315,7 +315,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         _targetCellDestination = GetCellPosFromWorld(endPos);
         _inLerp = true;
 
-        _activeMoveCoroutine = StartCoroutine(MoveToPos(startPos, endPos, movementDuration, movementDuration * 0.50f));
+        _activeMoveCoroutine = StartCoroutine(MoveToPos(startPos, endPos, 1.0f / movementSpeed, (1.0f / movementSpeed) * 0.50f));
     }
 
     private Vector2Int GetNewDirection(InputAction action)
@@ -368,6 +368,7 @@ public class PacStudentController : MonoBehaviour, ITeleportable
         } else if (collision.CompareTag("Enemy") && !_isDead)
         {
             GhostController colliderGhostController = collision.GetComponent<GhostController>();
+            if (colliderGhostController.GhostIsDead) return;
 
             if (!GameManager.Instance.GhostManager.GhostsAreScared)
             {
@@ -377,11 +378,16 @@ public class PacStudentController : MonoBehaviour, ITeleportable
                 dirtParticleSystem.Stop();
                 bloodParticleSystem.Play();
 
-                colliderGhostController.TriggerGhostReset();
+                GameManager.Instance.GhostManager.PlayerDeathEvent(deathAnimationLength);
             } else
             {
                 colliderGhostController.TriggerGhostDeath();
             }
         }
+    }
+
+    public float GetMovementSpeed()
+    {
+        return movementSpeed;
     }
 }

@@ -144,8 +144,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameIntro: {fileID: 8300000, guid: da390b69d84d5474e8b480f6088d8686, type: 3}
   ghostNormalState: {fileID: 8300000, guid: 3265661d01fbed24dbd5e657349edf67, type: 3}
-  ghostScaredState: {fileID: 8300000, guid: b92c75a966432bb4280a53c569c8518e, type: 3}
-  oneGhostDeadState: {fileID: 8300000, guid: 15a272bbd35758e479fc429983473eda, type: 3}
+  ghostScaredState: {fileID: 8300000, guid: 09cf24d5f8ee0ea4faa5e5d7fe55204f, type: 3}
+  oneGhostDeadState: {fileID: 8300000, guid: b92c75a966432bb4280a53c569c8518e, type: 3}
   introPlaySeconds: 3
 --- !u!1 &5911583032072574896
 GameObject:

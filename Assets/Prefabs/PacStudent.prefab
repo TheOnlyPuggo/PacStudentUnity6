@@ -5136,7 +5136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelMap: {fileID: 0}
-  movementDuration: 0.3
+  movementSpeed: 3
   wallTiles:
   - {fileID: 11400000, guid: 1ebd3a54f4c9d1c4db5f9c47828e0b51, type: 2}
   - {fileID: 11400000, guid: 26d1f316a00770143a72321f2884e5ee, type: 2}
