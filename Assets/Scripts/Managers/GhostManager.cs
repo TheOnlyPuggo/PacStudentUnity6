@@ -42,6 +42,7 @@ public class GhostManager : MonoBehaviour
             if (_playerDeadTimer > _ghostPauseLength)
             {
                 PlayerIsDead = false;
+                _playerDeadTimer = 0.0f;
 
                 foreach (var controller in ghostControllers)
                 {

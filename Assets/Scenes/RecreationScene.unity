@@ -29538,10 +29538,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 898510669}
     - target: {fileID: 7795520716036242066, guid: dc5ec60096e9a80469c4d1572aea7903, type: 3}
-      propertyPath: playerLives
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7795520716036242066, guid: dc5ec60096e9a80469c4d1572aea7903, type: 3}
       propertyPath: gameOverAnimator
       value: 
       objectReference: {fileID: 924755320}
