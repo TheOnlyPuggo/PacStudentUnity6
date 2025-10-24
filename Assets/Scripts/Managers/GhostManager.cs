@@ -199,13 +199,15 @@ public class GhostManager : MonoBehaviour
         }
     }
 
-    public bool SeeIfAnyGhostIsDead()
+    public int SeeAmountOfGhostsDead()
     {
+        int amount = 0;
+
         foreach (var controller in ghostControllers)
         {
-            if (controller.GhostIsDead) return true;
+            if (controller.GhostIsDead) amount += 1;
         }
 
-        return false;
+        return amount;
     }
 }

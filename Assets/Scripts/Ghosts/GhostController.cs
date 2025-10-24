@@ -297,7 +297,7 @@ public class GhostController : MonoBehaviour
 
             GameAudioManager gameAudioManager = GameManager.Instance.GameAudioManager;
             AudioSource gameAudioSource = gameAudioManager.GetComponent<AudioSource>();
-            if (gameAudioSource.clip == gameAudioManager.GetOneGhostDeadClip())
+            if (gameAudioSource.clip == gameAudioManager.GetOneGhostDeadClip() && GameManager.Instance.GhostManager.SeeAmountOfGhostsDead() == 0)
             {
                 gameAudioSource.clip = gameAudioManager.GetGhostScaredClip();
                 gameAudioSource.Play();

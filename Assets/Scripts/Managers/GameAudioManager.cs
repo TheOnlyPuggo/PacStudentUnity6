@@ -58,7 +58,7 @@ public class GameAudioManager : MonoBehaviour
         _ghostScaredTimer = 0.0f;
         if (duration != -1.0f) _ghostScaredDuration = duration;
 
-        if (GameManager.Instance.GhostManager.SeeIfAnyGhostIsDead()) _audioSource.clip = oneGhostDeadState;
+        if (GameManager.Instance.GhostManager.SeeAmountOfGhostsDead() > 0) _audioSource.clip = oneGhostDeadState;
         else _audioSource.clip = ghostScaredState;
 
         _audioSource.loop = true;
